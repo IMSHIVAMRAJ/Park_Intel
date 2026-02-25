@@ -1,0 +1,116 @@
+const pool = require("../../config/db");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const axios = require("axios");
+const FormData = require("form-data");
+const fs = require("fs");
+
+/* ================= VEHICLE CLEANER ================= */
+
+function cleanVehicleNumber(text) {
+  if (!text) return null;
+
+  return text
+    .toUpperCase()
+    .replace(/IND/g, "")
+    .replace(/[^A-Z0-9]/g, "")
+    .replace(/L/g, "1")
+    .replace(/O/g, "0")
+    .replace(/I/g, "1")
+    .replace(/S/g, "5")
+    .replace(/Z/g, "2")
+    .replace(/B/g, "8");
+}
+
+/* ================= REGISTER ================= */
+
+exports.register = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({
+        error: "Vehicle image required",
+      });
+    }
+
+    const imagePath = req.file.path;
+
+    // 🔥 OCR CALL
+    const formData = new FormData();
+    formData.append("file", fs.createReadStream(imagePath));
+
+    const ocrResponse = await axios.post(
+      "http://localhost:8000/ocr",
+      formData,
+      { headers: formData.getHeaders() }
+    );
+
+    fs.unlinkSync(imagePath);
+
+    console.log("Raw OCR:", ocrResponse.data.vehicle_number);
+
+    const vehicle_number = cleanVehicleNumber(
+      ocrResponse.data.vehicle_number
+    );
+
+    console.log("Final vehicle number:", vehicle_number);
+
+    if (!vehicle_number) {
+      return res.status(400).json({
+        error: "Vehicle number not detected from image",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await pool.query(
+      `INSERT INTO users (name, email, password, vehicle_number)
+       VALUES (?, ?, ?, ?)`,
+      [name, email, hashedPassword, vehicle_number]
+    );
+
+    res.json({
+      message: "User registered successfully",
+      vehicle_number,
+    });
+
+  } catch (err) {
+    res.status(400).json({
+      error: "Email or vehicle already exists",
+    });
+  }
+};
+
+/* ================= LOGIN ================= */
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  const [[user]] = await pool.query(
+    "SELECT * FROM users WHERE email = ?",
+    [email]
+  );
+
+  if (!user) {
+    return res.status(400).json({ error: "Invalid credentials" });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return res.status(400).json({ error: "Invalid credentials" });
+  }
+
+  const token = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
+
+  res.json({ token });
+};
