@@ -4,3 +4,4 @@ easyocr
 python-multipart
 langchain
 google-generativeai
+python-dotenv
