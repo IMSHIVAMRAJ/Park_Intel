@@ -23,7 +23,7 @@ function FindNearest() {
           const radius = 3; // km (same as Postman)
 
           const res = await fetch(
-            `http://localhost:5000/api/parking/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+            `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/parking/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
           );
 
           if (!res.ok) {

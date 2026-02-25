@@ -40,7 +40,7 @@ function StartParkingModal({ close }) {
       formData.append("image", imageFile);      // 🔥 multer expects "image"
 
       const res = await fetch(
-        "http://localhost:5000/api/ocr/auto-entry",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/ocr/auto-entry`,
         {
           method: "POST",
           body: formData,

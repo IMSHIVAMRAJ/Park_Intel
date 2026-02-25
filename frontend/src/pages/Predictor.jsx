@@ -29,7 +29,7 @@ function PredictorPage() {
       setAnalysis("");
 
       const res = await fetch(
-        "http://localhost:5000/api/prediction",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/prediction`,
         {
           method: "POST",
           headers: {

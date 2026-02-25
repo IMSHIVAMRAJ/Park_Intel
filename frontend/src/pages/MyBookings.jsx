@@ -30,7 +30,7 @@ function MyBookings() {
         }
 
         const res = await fetch(
-          "http://localhost:5000/api/booking/my",
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/booking/my`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // 🔥 IMPORTANT

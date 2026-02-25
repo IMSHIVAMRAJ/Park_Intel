@@ -23,7 +23,7 @@ function LoginModal({ close }) {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:5000/api/auth/login",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/login`,
         {
           method: "POST",
           headers: {

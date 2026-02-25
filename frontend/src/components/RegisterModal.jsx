@@ -49,7 +49,7 @@ function RegisterModal({ close }) {
       data.append("vehicle_image", formData.vehicle_image);
 
       const res = await fetch(
-        "http://localhost:5000/api/auth/register",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/register`,
         {
           method: "POST",
           body: data, // 🔥 backend ke liye perfect
