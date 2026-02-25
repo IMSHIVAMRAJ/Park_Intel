@@ -1,7 +1,7 @@
 fastapi
 uvicorn
-easyocr
 python-multipart
 langchain
 google-generativeai
 python-dotenv
+requests
