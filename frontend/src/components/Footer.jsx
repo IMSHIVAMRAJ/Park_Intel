@@ -23,7 +23,7 @@ function Footer() {
               </h2>
             </div>
             <p className="text-sm leading-relaxed mb-6">
-              Revolutionizing urban mobility through neural networks and real-time geospatial intelligence. Your premium parking partner.
+              Revolutionizing urban mobility through AI and real-time geospatial intelligence. Your premium parking partner.
             </p>
             <div className="flex gap-4">
               {[Github, Twitter, Linkedin, Mail].map((Icon, i) => (
@@ -56,7 +56,7 @@ function Footer() {
               Support & Tech
             </h3>
             <ul className="space-y-3 text-sm">
-              {["Help Center", "API Documentation", "System Status", "Privacy Policy", "Terms of Service"].map((link) => (
+              {["Help Center", , "Privacy Policy", "Terms of Service"].map((link) => (
                 <li key={link}>
                   <a href="#" className="hover:text-yellow-400 transition-colors">{link}</a>
                 </li>
@@ -72,7 +72,7 @@ function Footer() {
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-yellow-400 shrink-0" />
-                <span>Sector 62, Cyber City, <br />Noida, India</span>
+                <span>Buxar, <br />Bihar, India</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={18} className="text-yellow-400 shrink-0" />

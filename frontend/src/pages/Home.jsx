@@ -24,17 +24,17 @@ function Home() {
 
   // Tech Stack Data
   const techStack = [
-    { name: "React", icon: <Cpu className="text-blue-400" />, desc: "Builds the high-performance interactive user interface.", color: "border-blue-400/30" },
-    { name: "Node.js", icon: <Zap className="text-emerald-400" />, desc: "Handles backend logic and heavy API processing.", color: "border-emerald-400/30" },
-    { name: "Express.js", icon: <Server className="text-yellow-400" />, desc: "Lightweight framework powering structured REST APIs.", color: "border-yellow-400/30" },
     { name: "Redis", icon: <Search className="text-red-500" />, desc: "Real-time geospatial search for nearby spots.", color: "border-red-500/30" },
-    { name: "MySQL", icon: <Database className="text-blue-500" />, desc: "Secure bookings, users, and billing records.", color: "border-blue-500/30" },
-    { name: "Railway", icon: <Cloud className="text-purple-500" />, desc: "Reliable cloud hosting for production DB.", color: "border-purple-500/30" },
-    { name: "Upstash", icon: <Zap className="text-emerald-500" />, desc: "Serverless Redis for high-performance caching.", color: "border-emerald-500/30" },
+    { name: "MySQL", icon: <Database className="text-blue-500" />, desc: "Applied Transaction and lock while booking and billing .", color: "border-blue-500/30" },
     { name: "FastAPI", icon: <Server className="text-yellow-500" />, desc: "High-speed async OCR and AI endpoints.", color: "border-yellow-500/30" },
     { name: "LangChain", icon: <Cpu className="text-orange-500" />, desc: "Manages structured prompts and AI context.", color: "border-orange-500/30" },
     { name: "Gemini AI", icon: <BrainCircuit className="text-stone-400" />, desc: "Generates smart natural language insights.", color: "border-stone-500/30" },
+     { name: "Node.js", icon: <Zap className="text-emerald-400" />, desc: "Handles backend logic and Node-cron to take snapshot of parking lot.", color: "border-emerald-400/30" },
+    { name: "Railway", icon: <Cloud className="text-purple-500" />, desc: "Reliable cloud hosting for production DB.", color: "border-purple-500/30" },
+    { name: "Upstash", icon: <Zap className="text-emerald-500" />, desc: "Serverless Redis for high-performance caching.", color: "border-emerald-500/30" },
     { name: "OCR API", icon: <Scan className="text-white" />, desc: "Auto-extracts vehicle numbers from images.", color: "border-white/20" },
+    { name: "React", icon: <Cpu className="text-blue-400" />, desc: "Builds the high-performance interactive user interface.", color: "border-blue-400/30" },
+    { name: "Express.js", icon: <Server className="text-yellow-400" />, desc: "Lightweight framework powering structured REST APIs.", color: "border-yellow-400/30" },
   ];
 
   return (
@@ -112,7 +112,7 @@ function Home() {
         {/* --- HOW PARK-INTEL WORKS SECTION --- */}
         <div className="mt-40 mb-20">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter mb-4 uppercase">
+            <h2 className="text-4xl md:text-6xl font-black  tracking-tighter mb-4 uppercase">
               How <span className="text-yellow-400 underline decoration-yellow-400/30">Park-Intel</span> Works
             </h2>
             <p className="text-zinc-500 font-mono text-sm tracking-widest uppercase">The  Architecture Behind the Scenes</p>
