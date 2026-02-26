@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import MyBookings from "./pages/MyBookings";
 import FindNearest from "./pages/FindNearest";
 import Predictor from "./pages/Predictor";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/find" element={<FindNearest />} />
         <Route path="/predict" element={<Predictor />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }
