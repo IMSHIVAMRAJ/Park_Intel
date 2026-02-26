@@ -41,7 +41,7 @@ exports.register = async (req, res) => {
     formData.append("file", fs.createReadStream(imagePath));
 
     const ocrResponse = await axios.post(
-      "http://localhost:8000/ocr",
+      "https://park-intel-1.onrender.com/ocr",
       formData,
       { headers: formData.getHeaders() }
     );
