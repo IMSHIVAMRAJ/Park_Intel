@@ -3,6 +3,9 @@ import requests
 import re
 import os
 from dotenv import load_dotenv
+from PIL import Image
+import io
+
 load_dotenv()
 router = APIRouter()
 
@@ -13,28 +16,38 @@ async def extract_number_plate(file: UploadFile = File(...)):
     try:
         file_bytes = await file.read()
 
+        image = Image.open(io.BytesIO(file_bytes))
+
+        # 🔥 FIX: convert RGBA → RGB
+        if image.mode == "RGBA":
+            image = image.convert("RGB")
+
+        image = image.resize((800, 400))
+
+        buffer = io.BytesIO()
+        image.save(buffer, format="JPEG")
+        file_bytes = buffer.getvalue()
+
         response = requests.post(
             "https://api.ocr.space/parse/image",
-            files={"file": ("image.jpg", file_bytes)},
+            files={"file": (file.filename, file_bytes, "image/jpeg")},
             data={
                 "apikey": OCR_API_KEY,
-                "language": "eng"
-            }
+                "language": "eng",
+                "OCREngine": 2,
+                "scale": True
+            },
+            timeout=30
         )
 
         result = response.json()
-        print("OCR RESPONSE:", result)
-
-        if result.get("IsErroredOnProcessing"):
-            return {
-                "vehicle_number": "",
-                "error": result.get("ErrorMessage")
-            }
+        print("RAW OCR RESPONSE:", result)
 
         text = ""
-
         if result.get("ParsedResults"):
-            text = result["ParsedResults"][0]["ParsedText"]
+            text = result["ParsedResults"][0].get("ParsedText", "")
+
+        print("RAW OCR TEXT:", text)
 
         cleaned = re.sub(r'[^A-Z0-9]', '', text.upper())
 
