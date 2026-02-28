@@ -50,13 +50,12 @@ exports.register = async (req, res) => {
 
     console.log("Raw OCR:", ocrResponse.data.vehicle_number);
 
-    const vehicle_number = cleanVehicleNumber(
-      ocrResponse.data.vehicle_number
-    );
+   const vehicle_number = ocrResponse.data.vehicle_number;
+
 
     console.log("Final vehicle number:", vehicle_number);
 
-    if (!vehicle_number) {
+    if (!vehicle_number || vehicle_number.trim() === "") {
       return res.status(400).json({
         error: "Vehicle number not detected from image",
       });
