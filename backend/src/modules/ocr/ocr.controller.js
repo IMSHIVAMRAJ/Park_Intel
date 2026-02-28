@@ -32,7 +32,8 @@ exports.autoExitWithOCR = async (req, res) => {
     formData.append("file", fs.createReadStream(imagePath));
 
     const response = await axios.post(
-      "https://park-intel-1.onrender.com/ocr","https://localhost:8000/ocr",
+      "https://park-intel-1.onrender.com/ocr",
+      // "https://localhost:8000/ocr",
       formData,
       { headers: formData.getHeaders() }
     );
@@ -127,7 +128,8 @@ exports.autoEntryWithOCR = async (req, res) => {
     formData.append("file", fs.createReadStream(imagePath));
 
     const response = await axios.post(
-      "https://park-intel-1.onrender.com/ocr","https://localhost:8000/ocr",
+      "https://park-intel-1.onrender.com/ocr",
+      // "https://localhost:8000/ocr",
       formData,
       { headers: formData.getHeaders() }
     );

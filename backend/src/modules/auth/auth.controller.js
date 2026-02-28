@@ -27,8 +27,8 @@ exports.register = async (req, res) => {
 });
 
     const ocrResponse = await axios.post(
-      // "https://park-intel-1.onrender.com/ocr",
-      "http://localhost:8000/ocr",
+      "https://park-intel-1.onrender.com/ocr",
+      // "http://localhost:8000/ocr",
       formData,
       { headers: formData.getHeaders() }
     );
