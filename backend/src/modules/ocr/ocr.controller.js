@@ -30,9 +30,7 @@ exports.autoExitWithOCR = async (req, res) => {
 
     console.log("Raw OCR output:", response.data.vehicle_number);
 
-    const vehicle_number = cleanVehicleNumber(
-      response.data.vehicle_number
-    );
+   const vehicle_number = response.data.vehicle_number;
 
     console.log("Final vehicle number:", vehicle_number);
 
@@ -130,9 +128,7 @@ exports.autoEntryWithOCR = async (req, res) => {
 
     console.log("Raw OCR output:", response.data.vehicle_number);
 
-    const vehicle_number = cleanVehicleNumber(
-      response.data.vehicle_number
-    );
+    const vehicle_number = response.data.vehicle_number;
 
     console.log("Final vehicle number:", vehicle_number);
 
