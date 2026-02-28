@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Cpu, LogIn, UserPlus, LogOut, LayoutDashboard, Home as HomeIcon } from "lucide-react";
+import ParkLogo from "../assets/Park.png";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 
@@ -31,10 +32,10 @@ function Navbar() {
           
           {/* --- LOGO (Routes to Home) --- */}
           <Link to="/" className="flex items-center gap-2 group outline-none">
-            <div className="bg-yellow-400 p-1.5 rounded-lg group-hover:rotate-12 transition-transform duration-300">
-              <Cpu size={22} className="text-black" />
+            <div className="bg-black-400 p-1.5 rounded-lg group-hover:rotate-12 transition-transform duration-300">
+              <img src={ParkLogo} alt="Park" className="w-6 h-6 object-contain" />
             </div>
-            <h1 className="text-white font-black italic text-2xl tracking-tighter uppercase group-hover:text-yellow-400 transition-colors">
+            <h1 className="text-white font-black text-2xl tracking-tighter uppercase group-hover:text-yellow-400 transition-colors">
               PARK <span className="text-yellow-400">INTEL</span>
             </h1>
           </Link>
