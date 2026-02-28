@@ -5,22 +5,6 @@ const axios = require("axios");
 const FormData = require("form-data");
 const fs = require("fs");
 
-/* ================= VEHICLE CLEANER ================= */
-
-function cleanVehicleNumber(text) {
-  if (!text) return null;
-
-  return text
-    .toUpperCase()
-    .replace(/IND/g, "")
-    .replace(/[^A-Z0-9]/g, "")
-    .replace(/L/g, "1")
-    .replace(/O/g, "0")
-    .replace(/I/g, "1")
-    .replace(/S/g, "5")
-    .replace(/Z/g, "2")
-    .replace(/B/g, "8");
-}
 
 /* ================= REGISTER ================= */
 
@@ -38,10 +22,13 @@ exports.register = async (req, res) => {
 
     // 🔥 OCR CALL
     const formData = new FormData();
-    formData.append("file", fs.createReadStream(imagePath));
+    formData.append("file", fs.readFileSync(imagePath), {
+  filename: "plate.jpg"
+});
 
     const ocrResponse = await axios.post(
-      "https://park-intel-1.onrender.com/ocr",
+      // "https://park-intel-1.onrender.com/ocr",
+      "http://localhost:8000/ocr",
       formData,
       { headers: formData.getHeaders() }
     );
