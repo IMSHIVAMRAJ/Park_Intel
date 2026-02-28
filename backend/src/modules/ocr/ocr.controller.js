@@ -4,23 +4,7 @@ const fs = require("fs");
 const policyService = require("../../services/policy.service");
 const pool = require("../../config/db");
 
-// 🔥 COMMON CLEANING FUNCTION
-function cleanVehicleNumber(text) {
-  if (!text) return null;
 
-  let cleaned = text
-    .toUpperCase()
-    .replace(/IND/g, "")          // remove IND
-    .replace(/[^A-Z0-9]/g, "")   // remove garbage
-    .replace(/L/g, "1")
-    .replace(/O/g, "0")
-    .replace(/I/g, "1")
-    .replace(/S/g, "5")
-    .replace(/Z/g, "2")
-    .replace(/B/g, "8");
-
-  return cleaned || null;
-}
 
 /* ===================== AUTO EXIT ===================== */
 
@@ -29,13 +13,17 @@ exports.autoExitWithOCR = async (req, res) => {
     const imagePath = req.file.path;
 
     const formData = new FormData();
-    formData.append("file", fs.createReadStream(imagePath));
+    formData.append("file", fs.readFileSync(imagePath), {
+  filename: "plate.jpg"
+});
 
     const response = await axios.post(
       "https://park-intel-1.onrender.com/ocr",
       // "https://localhost:8000/ocr",
       formData,
-      { headers: formData.getHeaders() }
+      { headers: formData.getHeaders(),
+         maxBodyLength: Infinity
+       }
     );
 
     fs.unlinkSync(imagePath);
@@ -125,13 +113,17 @@ exports.autoEntryWithOCR = async (req, res) => {
     }
 
     const formData = new FormData();
-    formData.append("file", fs.createReadStream(imagePath));
+    formData.append("file", fs.readFileSync(imagePath), {
+  filename: "plate.jpg"
+});
 
     const response = await axios.post(
       "https://park-intel-1.onrender.com/ocr",
       // "https://localhost:8000/ocr",
       formData,
-      { headers: formData.getHeaders() }
+      { headers: formData.getHeaders(),
+          maxBodyLength: Infinity 
+       }
     );
 
     fs.unlinkSync(imagePath);
