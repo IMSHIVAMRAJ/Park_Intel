@@ -41,7 +41,7 @@ exports.register = async (req, res) => {
     formData.append("file", fs.createReadStream(imagePath));
 
     const ocrResponse = await axios.post(
-      "https://park-intel-1.onrender.com/ocr","localhost:8000/ocr",
+      "https://park-intel-1.onrender.com/ocr",
       formData,
       { headers: formData.getHeaders() }
     );
@@ -77,7 +77,7 @@ exports.register = async (req, res) => {
 
   } catch (err) {
     res.status(400).json({
-      error: "Email or vehicle already exists",
+      error: err.message,
     });
   }
 };
