@@ -1,0 +1,16 @@
+# env files (anywhere)
+.env
+.env.*
+
+# dependencies
+node_modules/
+
+# frontend
+frontend/node_modules/
+
+# backend
+backend/node_modules/
+
+# python
+venv/
+__pycache__/
