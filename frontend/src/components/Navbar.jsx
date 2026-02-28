@@ -105,7 +105,9 @@ function Navbar() {
         <LoginModal
           close={() => {
             setLoginOpen(false);
-            setIsLoggedIn(true);
+            // Re-check token after modal closes
+            const token = localStorage.getItem("token");
+            setIsLoggedIn(!!token);
           }}
         />
       )}

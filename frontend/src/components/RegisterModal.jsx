@@ -64,7 +64,7 @@ function RegisterModal({ close }) {
       }
 
       alert(
-        `Registration successful 🎉\nVehicle: ${result.vehicle_number}`
+        `Registration successful`
       );
       close();
     } catch (err) {
