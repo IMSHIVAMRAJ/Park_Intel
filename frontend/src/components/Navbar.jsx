@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Cpu, LogIn, UserPlus, LogOut, LayoutDashboard, Home as HomeIcon } from "lucide-react";
+import { Cpu, LogIn, UserPlus, LogOut, LayoutDashboard, Home as HomeIcon, Menu, X } from "lucide-react";
 import ParkLogo from "../assets/Park.png";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
@@ -9,6 +9,7 @@ function Navbar() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -73,13 +74,13 @@ function Navbar() {
 
                 <button
                   onClick={() => setRegisterOpen(true)}
-                  className="bg-yellow-400 text-black px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-widest hover:bg-yellow-300 transition-all shadow-lg shadow-yellow-400/10 active:scale-95 flex items-center gap-2"
+                  className="hidden sm:flex bg-yellow-400 text-black px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-widest hover:bg-yellow-300 transition-all shadow-lg shadow-yellow-400/10 active:scale-95 items-center gap-2"
                 >
                   <UserPlus size={16} /> Register
                 </button>
               </>
             ) : (
-              <div className="flex items-center gap-6">
+              <div className="hidden sm:flex items-center gap-6">
                 <div className="hidden lg:flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
                   <span className="text-[10px] text-emerald-500 font-black uppercase tracking-widest">
@@ -96,8 +97,97 @@ function Navbar() {
                 </button>
               </div>
             )}
+
+            {/* --- MOBILE MENU BUTTON --- */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-white p-2 hover:bg-zinc-800 rounded-lg transition-all"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
+
+        {/* --- MOBILE MENU --- */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/5 bg-[#0D0D0B]/95 backdrop-blur-md">
+            <div className="flex flex-col gap-2 px-6 py-4">
+              {/* Mobile Navigation Links */}
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
+                  isActive("/") 
+                    ? "text-yellow-400 bg-yellow-400/10" 
+                    : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                }`}
+              >
+                <HomeIcon size={18} /> 
+                <span className="text-sm font-bold uppercase tracking-wider">Home</span>
+              </Link>
+              
+              <Link
+                to="/bookings"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
+                  isActive("/bookings") 
+                    ? "text-yellow-400 bg-yellow-400/10" 
+                    : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                }`}
+              >
+                <LayoutDashboard size={18} /> 
+                <span className="text-sm font-bold uppercase tracking-wider">My Bookings</span>
+              </Link>
+
+              {/* Mobile Auth Buttons */}
+              {!isLoggedIn ? (
+                <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-white/5">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setLoginOpen(true);
+                    }}
+                    className="flex items-center gap-2 px-4 py-3 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+                  >
+                    <LogIn size={18} className="text-yellow-400" /> 
+                    <span className="text-sm font-bold uppercase tracking-wider">Login</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setRegisterOpen(true);
+                    }}
+                    className="flex items-center gap-2 px-4 py-3 rounded-lg bg-yellow-400 text-black hover:bg-yellow-300 transition-all font-black uppercase tracking-wider"
+                  >
+                    <UserPlus size={18} /> 
+                    <span className="text-sm">Register</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-white/5">
+                  <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-2 rounded-lg border border-emerald-500/20">
+                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span className="text-[10px] text-emerald-500 font-black uppercase tracking-widest">
+                      System Linked
+                    </span>
+                  </div>
+                  
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="flex items-center gap-2 px-4 py-3 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-red-500/50 transition-all"
+                  >
+                    <LogOut size={18} className="text-zinc-500" />
+                    <span className="text-sm font-bold uppercase text-zinc-400">Exit</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* --- MODALS --- */}
