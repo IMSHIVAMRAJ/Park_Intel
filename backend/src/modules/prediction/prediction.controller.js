@@ -28,7 +28,7 @@ LIMIT 8`,
 
     // 🔥 Gemini AI Service Call
     const aiResponse = await axios.post(
-      "https://park-intel-1.onrender.com/predict","localhost:8000/predict",
+      "https://park-intel-1.onrender.com/predict",
       {
         totalSlots,
         averageAvailable: avg,
